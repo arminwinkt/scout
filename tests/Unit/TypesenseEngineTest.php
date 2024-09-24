@@ -189,18 +189,14 @@ class TypesenseEngineTest extends TestCase
 
         $model = m::mock(stdClass::class);
         $model->shouldReceive(['getScoutKeyName' => 'id']);
-        $model->shouldReceive('getScoutModelsByIds')->andReturn(Collection::make([
-            new SearchableModel([
-                'document' => [
-                    [
-                        'id' => 1,
-                        'name' => 'test',
-                    ]
-                ],
-                'geo_distance_meters' => ['location' => 5],
-                'highlights' => [],
-            ]),
-        ]));
+        $model->shouldReceive('getScoutModelsByIds')->andReturn(
+            Collection::make([
+                new SearchableModel([
+                    'id' => 1,
+                    'name' => 'test',
+                ]),
+            ])
+        );
 
         $builder = m::mock(Builder::class);
 
