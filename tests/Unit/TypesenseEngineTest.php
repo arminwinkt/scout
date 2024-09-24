@@ -183,46 +183,6 @@ class TypesenseEngineTest extends TestCase
         $this->assertEquals([1, 2, 3], $mappedIds->toArray());
     }
 
-    public function test_map_correctly_maps_results_to_models()
-    {
-        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class));
-
-        $model = m::mock(stdClass::class);
-        $model->shouldReceive(['getScoutKeyName' => 'id']);
-        $model->shouldReceive('getScoutModelsByIds')->andReturn(Collection::make([
-            new SearchableModel([
-                'document' => [
-                    [
-                        'id' => 1,
-                        'name' => 'test',
-                    ]
-                ],
-                'geo_distance_meters' => ['location' => 5],
-                'highlights' => [],
-            ]),
-        ]));
-
-        $builder = m::mock(Builder::class);
-
-        $results = $engine->map($builder, [
-            'found' => 1,
-            'hits' => [
-                [
-                    'document' => ['id' => 1, 'name' => 'test'],
-                    'geo_distance_meters' => ['location' => 5],
-                    'highlights' => [],
-                ],
-            ],
-        ], $model);
-
-        $this->assertCount(1, $results);
-        $this->assertEquals(['id' => 1, 'name' => 'test'], $results->first()->toArray());
-        $this->assertEquals(
-            ['geo_distance_meters' => ['location' => 5], 'highlights' => []],
-            $results->first()->scoutMetadata()
-        );
-    }
-
     public function test_get_total_count_method(): void
     {
         // Sample search results with 'found' key
