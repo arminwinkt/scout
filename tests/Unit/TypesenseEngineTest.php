@@ -185,7 +185,7 @@ class TypesenseEngineTest extends TestCase
 
     public function test_map_correctly_maps_results_to_models()
     {
-        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class));
+        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class), 10);
 
         $model = m::mock(stdClass::class);
         $model->shouldReceive(['getScoutKeyName' => 'id']);
@@ -218,7 +218,7 @@ class TypesenseEngineTest extends TestCase
 
     public function test_map_correctly_maps_results_to_models_with_multiple_hits()
     {
-        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class));
+        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class), 10);
 
         $model = m::mock(stdClass::class);
         $model->shouldReceive(['getScoutKeyName' => 'id']);
@@ -268,7 +268,7 @@ class TypesenseEngineTest extends TestCase
 
     public function test_scoutMetadata_is_empty_for_missing_hits()
     {
-        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class));
+        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class), 10);
 
         $model = m::mock(stdClass::class);
         $model->shouldReceive(['getScoutKeyName' => 'id']);
@@ -300,7 +300,7 @@ class TypesenseEngineTest extends TestCase
 
     public function test_that_document_result_is_not_added_to_scoutMetadata()
     {
-        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class));
+        $engine = new TypesenseEngine($this->createMock(TypesenseClient::class), 10);
 
         $model = m::mock(stdClass::class);
         $model->shouldReceive(['getScoutKeyName' => 'id']);
