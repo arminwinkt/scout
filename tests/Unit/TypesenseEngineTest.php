@@ -274,7 +274,7 @@ class TypesenseEngineTest extends TestCase
         $model->shouldReceive(['getScoutKeyName' => 'id']);
         $model->shouldReceive('getScoutModelsByIds')->andReturn(
             Collection::make([
-                new SearchableModel(['id' => '', 'name' => 'test']),
+                new SearchableModel(['id' => 1, 'name' => 'test']),
             ])
         );
 
@@ -283,18 +283,20 @@ class TypesenseEngineTest extends TestCase
         $results = $engine->map($builder, [
             'found' => 1,
             'grouped_hits' => [
-                'hits' => [
-                    [
-                        'document' => ['id' => 1, 'name' => 'test'],
-                        'geo_distance_meters' => ['location' => 5],
-                        'highlights' => [],
+                1 => [
+                    'hits' => [
+                        [
+                            'document' => ['id' => 1, 'name' => 'test'],
+                            'geo_distance_meters' => ['location' => 5],
+                            'highlights' => [],
+                        ],
                     ],
                 ],
             ],
         ], $model);
 
         $this->assertCount(1, $results);
-        $this->assertEquals(['id' => null, 'name' => 'test'], $results->first()->toArray());
+        $this->assertEquals(['id' => 1, 'name' => 'test'], $results->first()->toArray());
         $this->assertEquals([], $results->first()->scoutMetadata());
     }
 
