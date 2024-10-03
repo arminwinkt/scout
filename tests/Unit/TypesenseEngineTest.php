@@ -274,7 +274,7 @@ class TypesenseEngineTest extends TestCase
         $model->shouldReceive(['getScoutKeyName' => 'id']);
         $model->shouldReceive('getScoutModelsByIds')->andReturn(
             Collection::make([
-                new SearchableModel(['id' => null, 'name' => 'test']),
+                new SearchableModel(['id' => '', 'name' => 'test']),
             ])
         );
 
